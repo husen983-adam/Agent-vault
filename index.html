@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agent Vault</title>
+    <style>
+      body {
+        font-family: "Courier New", monospace;
+        background: #0a0a0a;
+        color: #00ff00;
+        padding: 20px;
+      }
+      input,
+      button {
+        padding: 12px;
+        margin: 10px 0;
+        font-family: inherit;
+        background: #222;
+        color: #00ff00;
+        border: 1px solid #00ff00;
+      }
+      button {
+        cursor: pointer;
+      }
+      button:hover {
+        background: #00ff00;
+        color: #000;
+      }
+      #admin {
+        display: none;
+        background: rgba(0, 255, 0, 0.1);
+        padding: 20px;
+        border-left: 4px solid #00ff00;
+      }
+      #flag {
+        font-size: 18px;
+        font-weight: bold;
+        color: #ff00ff;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      h1 {
+        text-align: center;
+        text-shadow: 0 0 10px #00ff00;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Agent Vault - Classified</h1>
+      <div id="login">
+        <input id="pwd" type="password" placeholder="Agent password" />
+        <br /><button onclick="checkLogin()">Login</button>
+      </div>
+      <div id="admin">
+        <h2>Admin Panel</h2>
+        <input id="secCode" placeholder="Security ID" />
+        <br /><button onclick="fetchFlag()">Get Flag</button>
+        <p id="flag">No data</p>
+        <hr />
+        <input id="hilsen" placeholder="Leave message" />
+        <br /><button onclick="saveHilsen()">Save Message</button>
+      </div>
+    </div>
+    <script>
+      const API_URL =
+        "https://script.google.com/macros/s/AKfycbwHwYMhU4veBwm8uEtkTmumLGbsGBdG6aZYU_K1MbIfSeyDAWGhVRGK53ZLhP4yr2fQUA/exec";
+
+      function checkLogin() {
+        if (document.getElementById("pwd").value === "agent123") {
+          document.getElementById("login").style.display = "none";
+          document.getElementById("admin").style.display = "block";
+        } else {
+          alert("Denied");
+        }
+      }
+      function fetchFlag() {
+        const code = document.getElementById("secCode").value;
+        fetch(API_URL + "?id=" + code)
+          .then((res) => res.json())
+          .then((data) => {
+            document.getElementById("flag").textContent = data.flag;
+          })
+          .catch(() => alert("DB error"));
+      }
+      function saveHilsen() {
+        const msg = document.getElementById("hilsen").value;
+        fetch(API_URL, {
+          method: "POST",
+          body: new URLSearchParams({ hilsen: msg }),
+        }).then(() => alert("Saved"));
+      }
+    </script>
+  </body>
+</html>
