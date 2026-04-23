@@ -46,18 +46,25 @@
         text-align: center;
         text-shadow: 0 0 10px #00ff00;
       }
+      .hint {
+        color: #888;
+        font-size: 14px;
+        margin-top: 5px;
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <h1>Agent Vault - Classified</h1>
       <div id="login">
-        <input id="pwd" type="password" placeholder="Agent password" />
+        <input id="pwd" type="password" placeholder="city + year" />
+        <p class="hint">Hint: city + year</p>
         <br /><button onclick="checkLogin()">Login</button>
       </div>
       <div id="admin">
         <h2>Admin Panel</h2>
         <input id="secCode" placeholder="Security ID" />
+        <p class="hint">Hint: education keyword</p>
         <br /><button onclick="fetchFlag()">Get Flag</button>
         <p id="flag">No data</p>
         <hr />
@@ -70,7 +77,7 @@
         "https://script.google.com/macros/s/AKfycbwHwYMhU4veBwm8uEtkTmumLGbsGBdG6aZYU_K1MbIfSeyDAWGhVRGK53ZLhP4yr2fQUA/exec";
 
       function checkLogin() {
-        if (document.getElementById("pwd").value === "agent123") {
+        if (document.getElementById("pwd").value === "oslo2026") {
           document.getElementById("login").style.display = "none";
           document.getElementById("admin").style.display = "block";
         } else {
