@@ -46,7 +46,6 @@
         text-align: center;
         text-shadow: 0 0 10px #00ff00;
       }
-      .hint { color: #888; font-size: 14px; margin: 5px 0; }
     </style>
   </head>
   <body>
@@ -54,16 +53,16 @@
       <h1>Agent Vault - Classified</h1>
       <div id="login">
         <input id="pwd" type="password" placeholder="city + year" />
-        <br /><button onclick="checkLogin()">Login</button>
+        <button onclick="checkLogin()">Login</button>
       </div>
       <div id="admin">
         <h2>Admin Panel</h2>
         <input id="secCode" placeholder="Security ID (otde?)" />
-<br /><button onclick="fetchFlag()">Get Flag</button>
+        <button onclick="fetchFlag()">Get Flag</button>
         <p id="flag">No data</p>
         <hr />
         <input id="hilsen" placeholder="Leave message" />
-        <br /><button onclick="saveHilsen()">Save Message</button>
+        <button onclick="saveHilsen()">Save Message</button>
       </div>
     </div>
     <script>
@@ -78,6 +77,7 @@
           alert("Denied");
         }
       }
+
       function fetchFlag() {
         const code = document.getElementById("secCode").value;
         fetch(API_URL + "?id=" + code)
@@ -87,12 +87,15 @@
           })
           .catch(() => alert("DB error"));
       }
+
       function saveHilsen() {
         const msg = document.getElementById("hilsen").value;
         fetch(API_URL, {
           method: "POST",
           body: new URLSearchParams({ hilsen: msg }),
-        }).then(() => alert("Saved"));
+        })
+          .then(() => alert("Saved"))
+          .catch(() => alert("Save failed"));
       }
     </script>
   </body>
